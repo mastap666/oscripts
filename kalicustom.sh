@@ -32,9 +32,10 @@ echo "
 read -p "Choose your keyboard layout (ch;de;us): " -i ch -e keyboard
 read -p "Choose your system time zone (Europe/Zurich): " -i Europe/Zurich -e timezone
 read -p "Choose your ntp server: " -i ch.pool.ntp.org -e ntp
-read -p "Install Vmbox guest tools? (y/n) :" -i y -e vbox
-read -p "Enable SSH with root access? (y/n) :" -i n -e ssh
-read -p "Install all Kali updates? (y/n) :" -i y -e update
+read -p "Install Vmbox guest tools? (y/n): " -i y -e vbox
+read -p "Install Custom Tools? (y/n): " -i y -e tools
+read -p "Enable SSH with root access? (y/n): " -i n -e ssh
+read -p "Install all Kali updates? (y/n): " -i y -e update
 echo "
 
 " 
@@ -99,8 +100,8 @@ if [ $ssh == "y" ]
 			echo SSH will be enabled with root access...
 			echo "PubkeyAuthentication yes" >/etc/ssh/sshd_config
 			echo "PermitRootLogin yes" >/etc/ssh/sshd_config
-			service ssh enable
-			service ssh start
+			/etc/init.d/ssh enable
+			/etc/init.d/ssh start
                 
         else
 
