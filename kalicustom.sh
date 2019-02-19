@@ -45,8 +45,9 @@ echo "
 # expand the ls command
 alias ls='ls --color=auto'
 echo "alias ls='ls -la --color=auto'" >>~/.bashrc
-
-
+echo "alias sfs='cd /root/tools/sfs/scripts'" >>~/.bashrc
+echo "alias mastap='cd /root/tools/github/mastap666/scripts'" >>~/.bashrc
+echo "alias chris='cd /root/tools/github/christiankropf'" >>~/.bashrc
 
 # set keyboard layout
 gsettings set org.gnome.desktop.input-sources sources "[('xkb', '$keyboard')]"
@@ -57,9 +58,11 @@ gsettings set org.gnome.desktop.input-sources sources "[('xkb', '$keyboard')]"
 echo "Default tools will be installed...
 ----------------------------------
 "
-sleep 2
+sleep 3
 apt-get install ntpdate -y
 apt-get install terminator -y
+apt-get install ipcalc -y
+apt-get install mtr -y
 if [ $vbox == "y" ]
         then
 			apt-get install -y virtualbox-guest-x11 
@@ -129,6 +132,15 @@ if [ $update == "y" ]
 
 fi
 
+echo "
+
+
+
+Script is complete.... Thank you for using!
+
+
+
+"
 
 #### END #####
 
