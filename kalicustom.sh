@@ -21,7 +21,7 @@ echo "
   |  .  ||  |  ||     | |  |     \     ||     |\    |  |  |  |     ||   |   |     \    \     ||  .  \ |  | |  |    |  |  
   |__|\_||__|__||_____||____|     \____| \__,_| \___|  |__|   \___/ |___|___|      \___|\____||__|\_||____||__|    |__|  
    
-                                        by Patrick Frei - v.1.0 - FEB2019
+                                        by Patrick Frei - v.1.5 - FEB2019
 											
 
 
@@ -46,10 +46,7 @@ echo "
 
 # expand the ls command
 alias ls='ls --color=auto'
-echo "alias ls='ls -la --color=auto'" >>~/.bashrc
-echo "alias sfs='cd /root/tools/sfs/scripts'" >>~/.bashrc
-echo "alias mastap='cd /root/tools/github/mastap666/scripts'" >>~/.bashrc
-echo "alias chris='cd /root/tools/github/christiankropf'" >>~/.bashrc
+
 
 # set keyboard layout
 gsettings set org.gnome.desktop.input-sources sources "[('xkb', '$keyboard')]"
@@ -62,21 +59,34 @@ echo "Default tools will be installed...
 "
 sleep 3
 apt-get install ntpdate -y
-apt-get install terminator -y
-apt-get install ipcalc -y
-apt-get install mtr -y
-if [ $vbox == "y" ]
+if [ $tools == "y" ]
+		then 
+			echo "
+			
+Custom tools will be installed...
+----------------------------------
+
+			"
+			sleep 3
+			apt-get install terminator -y
+			apt-get install ipcalc -y
+			apt-get install mtr -y
+			echo "
+			
+tool installations completed...
+
+"
+			sleep 3
+	elif [ $vbox == "y" ]
         then
 			apt-get install -y virtualbox-guest-x11 
-                
-        else
-                echo .
+    
+		else
+
+
 
 fi
-echo "
-tool installations completed...
-"
-sleep 3
+
 
 
 #set ntp server
@@ -101,11 +111,7 @@ if [ $ssh == "y" ]
 			echo "PubkeyAuthentication yes" >/etc/ssh/sshd_config
 			echo "PermitRootLogin yes" >/etc/ssh/sshd_config
 			/etc/init.d/ssh enable
-			/etc/init.d/ssh start
-                
-        else
-
-                echo No SSH access will be started...
+			/etc/init.d/ssh start 
 
 fi
 echo "
