@@ -35,6 +35,7 @@ read -p "Choose your ntp server: " -i ch.pool.ntp.org -e ntp
 read -p "Install Vmbox guest tools? (y/n): " -i y -e vbox
 read -p "Install Custom Tools? (y/n): " -i y -e tools
 read -p "Enable SSH with root access? (y/n): " -i n -e ssh
+read -p "Change root password? (y/n): " -i n -e password
 read -p "Install all Kali updates? (y/n): " -i y -e update
 echo "
 
@@ -45,7 +46,7 @@ echo "
 
 
 # expand the ls command
-alias ls='ls --color=auto'
+alias ls='ls -lan --color=auto'
 
 
 # set keyboard layout
@@ -81,7 +82,7 @@ tool installations completed...
         then
 			apt-get install -y virtualbox-guest-x11 
     
-		else
+
 
 
 
@@ -100,13 +101,14 @@ sleep 3
 
 
 # enable ssh with root access
-echo "
+if [ $ssh == "y" ]
+        then
+		echo "
 
 Setup SSH Server...
 -------------------
+
 "
-if [ $ssh == "y" ]
-        then
 			echo SSH will be enabled with root access...
 			echo "PubkeyAuthentication yes" >/etc/ssh/sshd_config
 			echo "PermitRootLogin yes" >/etc/ssh/sshd_config
@@ -122,6 +124,21 @@ sleep 3
 # set timezone
 timedatectl set-timezone $timezone
 
+
+#set new password
+if [ $password == y ]
+		then
+			echo "
+
+change root password...
+-------------------
+
+"
+			sleep 2
+			passwd root
+			sleep 5
+			
+fi
 
 # update kali
 echo "
