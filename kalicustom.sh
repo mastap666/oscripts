@@ -39,13 +39,19 @@ echo "
 												
 "
 
-#### Variables ####
+#### Variables ######
 read -p "Choose your keyboard layout (ch;de;us): " -i ch -e keyboard
 read -p "Choose your system time zone (Europe/Zurich): " -i Europe/Zurich -e timezone
 read -p "Choose your ntp server: " -i ch.pool.ntp.org -e ntp
-read -p "Install Vmbox guest tools? (y/n): " -i y -e vbox
+read -p "Install Vmbox guest tools? (y/n): " -i n -e vbox
 read -p "Install Custom Tools? (y/n): " -i y -e tools
 read -p "Change Hostname (y/n): " -i n -e hs
+if 	[ $hs == y ]
+		then
+			read -p "Enter new hostname: " -e hostname
+	else
+			hostname=kali
+fi
 read -p "Enable SSH with root access? (y/n): " -i n -e ssh
 read -p "Change root password? (y/n): " -i n -e password
 read -p "Change to Quad9 DNS Server? (y/n): " -i n -e dns
@@ -53,7 +59,10 @@ read -p "Install Kali updates? (y/n): " -i n -e update
 if [ $update == y ]
 		then
 			read -p "Install Kali rolling Updates? (y/n): " -i n -e rolling
-			
+	else
+			rolling="n"
+		
+fi		
 echo "
 
 " 
@@ -143,10 +152,16 @@ sleep 3
 # change hostname
 if [ $hs == y ]
 		then
-			read -p "Enter new hostname: " -e hostname
+			echo "
+
+Set ntp server...
+-----------------
+"
 			echo $hostname >/etc/hostname
 			echo "
+			
 Your new hostname is $hostname
+
 "
 
 fi
@@ -200,26 +215,22 @@ if [ $dns == y ]
 				
 fi
 
-				
 # update kali
-echo "
-"
-if [ $update == "y" ]
+if [ $update == y ]
         then
                 echo "Updates will be installed, please hold the line..."
 				sleep 3
                 apt-get update -y && apt-get upgrade -y
-
-                
+				
 	elif [ $rolling == y ]
 				echo "Rolling updates will be installed..."
 				apt-get dist-upgrade -y
                 
-        else
-
-                echo No updates will be installed... 
+	else
+                echo "No updates will be installed..."
 
 fi
+
 
 echo "
 
