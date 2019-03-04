@@ -223,6 +223,7 @@ if [ $update == y ]
                 apt-get update -y && apt-get upgrade -y
 				
 	elif [ $rolling == y ]
+		then
 				echo "Rolling updates will be installed..."
 				apt-get dist-upgrade -y
                 
