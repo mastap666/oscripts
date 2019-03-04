@@ -9,6 +9,17 @@
 ###################################
 ###################################
 
+###Changelog:
+#0.1	Initial
+#0.2	corrections
+#1.0	first runs
+#1.1	add more stuff
+#1.2	add ssh section
+#1.3	add password section
+#1.4	add more stuff
+###
+
+
 # Title
 clear
 
@@ -21,7 +32,7 @@ echo "
   |  .  ||  |  ||     | |  |     \     ||     |\    |  |  |  |     ||   |   |     \    \     ||  .  \ |  | |  |    |  |  
   |__|\_||__|__||_____||____|     \____| \__,_| \___|  |__|   \___/ |___|___|      \___|\____||__|\_||____||__|    |__|  
    
-                                        by Patrick Frei - v.1.5 - FEB2019
+                                  --== by Patrick Frei - v.1.4 - MAE2019 ==--
 											
 
 
@@ -34,9 +45,15 @@ read -p "Choose your system time zone (Europe/Zurich): " -i Europe/Zurich -e tim
 read -p "Choose your ntp server: " -i ch.pool.ntp.org -e ntp
 read -p "Install Vmbox guest tools? (y/n): " -i y -e vbox
 read -p "Install Custom Tools? (y/n): " -i y -e tools
+read -p "Change Hostname (y/n): " -i n -e hs
 read -p "Enable SSH with root access? (y/n): " -i n -e ssh
 read -p "Change root password? (y/n): " -i n -e password
-read -p "Install all Kali updates? (y/n): " -i y -e update
+read -p "Change to Quad9 DNS Server? (y/n): " -i n -e dns
+read -p "Install Kali updates? (y/n): " -i n -e update
+if [ $update == y ]
+		then
+			read -p "Install Kali rolling Updates? (y/n): " -i n -e rolling
+			
 echo "
 
 " 
@@ -46,12 +63,20 @@ echo "
 
 
 # expand the ls command
-alias ls='ls -lan --color=auto'
+sleep 2
+
+echo alias ls='ls -la --color=auto' >>~/.bashrc
+alias ls='ls -la --color=auto'
+
 
 
 # set keyboard layout
 gsettings set org.gnome.desktop.input-sources sources "[('xkb', '$keyboard')]"
 
+# set wallpaper
+cd ~/Pictures
+wget https://wallimpex.com/data/out/464/kali-linux-desktop-wallpaper-8323926.jpg
+gsettings set org.gnome.desktop.background picture-uri "file:///root/Pictures/kali-linux-desktop-wallpaper-8323926.jpg"
 
 
 #install tools
@@ -60,6 +85,15 @@ echo "Default tools will be installed...
 "
 sleep 3
 apt-get install ntpdate -y
+apt-get install terminator -y
+cd ~
+mkdir tools
+
+
+#update nmap db
+nmap --script-updatedb
+
+
 if [ $tools == "y" ]
 		then 
 			echo "
@@ -69,9 +103,15 @@ Custom tools will be installed...
 
 			"
 			sleep 3
-			apt-get install terminator -y
 			apt-get install ipcalc -y
 			apt-get install mtr -y
+			apt-get install tor -y
+			#freevulnserach
+			apt-get install geoip-bin -y
+			apt-get install jq -y
+			#freevulnaudit
+			apt-get install xlstproc -y
+			apt-get install wkhtmltopdf -y
 			echo "
 			
 tool installations completed...
@@ -100,6 +140,18 @@ ntpdate $ntp
 sleep 3
 
 
+# change hostname
+if [ $hs == y ]
+		then
+			read -p "Enter new hostname: " -e hostname
+			echo $hostname >/etc/hostname
+			echo "
+Your new hostname is $hostname
+"
+
+fi
+
+	
 # enable ssh with root access
 if [ $ssh == "y" ]
         then
@@ -140,16 +192,28 @@ change root password...
 			
 fi
 
+#DNS Quad9 Server
+if [ $dns == y ]
+		then
+				echo "Quad9 DNS will be configured... "
+				echo "nameserver 9.9.9.9" >/etc/resolv.conf
+				
+fi
+
+				
 # update kali
 echo "
 "
 if [ $update == "y" ]
         then
-                echo Updates will be installed, please sleep...
+                echo "Updates will be installed, please hold the line..."
 				sleep 3
                 apt-get update -y && apt-get upgrade -y
-				nmap --script-updatedb
-                apt-get dist-upgrade -y
+
+                
+	elif [ $rolling == y ]
+				echo "Rolling updates will be installed..."
+				apt-get dist-upgrade -y
                 
         else
 
