@@ -17,6 +17,7 @@
 #1.2	add ssh section
 #1.3	add password section
 #1.4	add more stuff
+#1.5	bugfix >
 ###
 
 
@@ -32,7 +33,7 @@ echo "
   |  .  ||  |  ||     | |  |     \     ||     |\    |  |  |  |     ||   |   |     \    \     ||  .  \ |  | |  |    |  |  
   |__|\_||__|__||_____||____|     \____| \__,_| \___|  |__|   \___/ |___|___|      \___|\____||__|\_||____||__|    |__|  
    
-                                  --== by Patrick Frei - v.1.4 - MAE2019 ==--
+                                  --== by Patrick Frei - v.1.5 - MAE2019 ==--
 											
 
 
@@ -74,7 +75,7 @@ echo "
 # expand the ls command
 sleep 2
 
-echo alias ls='ls -la --color=auto' >>~/.bashrc
+echo "alias ls='ls -la --color=auto'" >>~/.bashrc
 alias ls='ls -la --color=auto'
 
 
@@ -177,8 +178,8 @@ Setup SSH Server...
 
 "
 			echo SSH will be enabled with root access...
-			echo "PubkeyAuthentication yes" >/etc/ssh/sshd_config
-			echo "PermitRootLogin yes" >/etc/ssh/sshd_config
+			echo "PubkeyAuthentication yes" >>/etc/ssh/sshd_config
+			echo "PermitRootLogin yes" >>/etc/ssh/sshd_config
 			/etc/init.d/ssh enable
 			/etc/init.d/ssh start 
 
