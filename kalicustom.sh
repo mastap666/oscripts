@@ -19,6 +19,7 @@
 #1.20	add more stuff
 #1.21	bugfix
 #1.22	change wallpaper
+#1.23	change lockscreen wallpaper + time
 ###
 
 
@@ -34,7 +35,7 @@ echo "
   |  .  ||  |  ||     | |  |     \     ||     |\    |  |  |  |     ||   |   |     \    \     ||  .  \ |  | |  |    |  |  
   |__|\_||__|__||_____||____|     \____| \__,_| \___|  |__|   \___/ |___|___|      \___|\____||__|\_||____||__|    |__|  
    
-                                  --== by Patrick Frei - v.1.5 - MAE2019 ==--
+                                  --== by Patrick Frei - v.1.23 - APR2019 ==--
 											
 
 
@@ -84,11 +85,12 @@ alias ls='ls -la --color=auto'
 # set keyboard layout
 gsettings set org.gnome.desktop.input-sources sources "[('xkb', '$keyboard')]"
 
-# set wallpaper
+# set wallpaper and disable lockscreen
 cd ~/Pictures
-wget https://github.com/mastap666/scripts/tree/master/wallpaper/wp1.jpg
+wget https://raw.githubusercontent.com/mastap666/scripts/master/wallpaper/wp1.jpg
 gsettings set org.gnome.desktop.background picture-uri "file:///root/Pictures/wp1.jpg"
-
+gsettings set org.gnome.desktop.screensaver picture-uri "file:///root/Pictures/wp1.jpg"
+gsettings set org.gnome.desktop.session idle-delay 0
 
 #install tools
 echo "Default tools will be installed...
