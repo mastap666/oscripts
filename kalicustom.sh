@@ -73,7 +73,6 @@ echo "
 
 #### main script #####
 
-
 # expand the ls command
 sleep 2
 
@@ -152,7 +151,6 @@ Set ntp server...
 ntpdate $ntp
 sleep 3
 
-
 # change hostname
 if [ $hs == y ]
 		then
@@ -170,7 +168,6 @@ Your new hostname is $hostname
 
 fi
 
-	
 # enable ssh with root access
 if [ $ssh == "y" ]
         then
@@ -190,8 +187,6 @@ fi
 echo "
 "
 sleep 3
-
-
 # set timezone
 timedatectl set-timezone $timezone
 
@@ -248,6 +243,3 @@ Script is complete.... Thank you for using!
 "
 
 #### END #####
-
-
-
