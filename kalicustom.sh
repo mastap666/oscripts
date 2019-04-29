@@ -13,11 +13,12 @@
 #0.1	Initial
 #0.2	corrections
 #1.0	first runs
-#1.1	add more stuff
-#1.2	add ssh section
-#1.3	add password section
-#1.4	add more stuff
-#1.5	bugfix >
+#1.10	add more stuff
+#1.11	add ssh section
+#1.12	add password section
+#1.20	add more stuff
+#1.21	bugfix
+#1.22	change wallpaper
 ###
 
 
@@ -85,8 +86,8 @@ gsettings set org.gnome.desktop.input-sources sources "[('xkb', '$keyboard')]"
 
 # set wallpaper
 cd ~/Pictures
-wget https://wallimpex.com/data/out/464/kali-linux-desktop-wallpaper-8323926.jpg
-gsettings set org.gnome.desktop.background picture-uri "file:///root/Pictures/kali-linux-desktop-wallpaper-8323926.jpg"
+wget https://github.com/mastap666/scripts/tree/master/wallpaper/wp1.jpg
+gsettings set org.gnome.desktop.background picture-uri "file:///root/Pictures/wp1.jpg"
 
 
 #install tools
