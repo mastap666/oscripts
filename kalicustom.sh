@@ -20,6 +20,7 @@
 #1.21	bugfix
 #1.22	change wallpaper
 #1.23	change lockscreen wallpaper + time
+#1.24	add openvas and move pw change up
 ###
 
 
@@ -35,7 +36,7 @@ echo "
   |  .  ||  |  ||     | |  |     \     ||     |\    |  |  |  |     ||   |   |     \    \     ||  .  \ |  | |  |    |  |  
   |__|\_||__|__||_____||____|     \____| \__,_| \___|  |__|   \___/ |___|___|      \___|\____||__|\_||____||__|    |__|  
    
-                                  --== by Patrick Frei - v.1.23 - APR2019 ==--
+                                  --== by Patrick Frei - v.1.24 - AUG2019 ==--
 											
 
 
@@ -91,6 +92,25 @@ gsettings set org.gnome.desktop.background picture-uri "file:///root/Pictures/wp
 gsettings set org.gnome.desktop.screensaver picture-uri "file:///root/Pictures/wp1.jpg"
 gsettings set org.gnome.desktop.session idle-delay 0
 
+
+#set new password
+if [ $password == y ]
+		then
+			echo "
+
+change root password...
+-------------------
+
+"
+			sleep 2
+			passwd root
+			sleep 5
+			
+fi
+echo "
+
+"
+
 #install tools
 echo "Default tools will be installed...
 ----------------------------------
@@ -115,9 +135,11 @@ Custom tools will be installed...
 
 			"
 			sleep 3
+			#div_tools
 			apt-get install ipcalc -y
 			apt-get install mtr -y
 			apt-get install tor -y
+			apt-get install openvas -y
 			#freevulnserach
 			apt-get install geoip-bin -y
 			apt-get install jq -y
@@ -191,20 +213,6 @@ sleep 3
 timedatectl set-timezone $timezone
 
 
-#set new password
-if [ $password == y ]
-		then
-			echo "
-
-change root password...
--------------------
-
-"
-			sleep 2
-			passwd root
-			sleep 5
-			
-fi
 
 #DNS Quad9 Server
 if [ $dns == y ]
